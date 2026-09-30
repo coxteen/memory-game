@@ -33,9 +33,9 @@ namespace MemoryGame.Model
             set
             {
                 if (value < 10)
-                    value = 10; // Minimum 10 seconds
+                    value = 10;
                 if (value > 300)
-                    value = 300; // Maximum 5 minutes
+                    value = 300;
 
                 _timeLimit = value;
                 OnPropertyChanged();
@@ -48,9 +48,9 @@ namespace MemoryGame.Model
             set
             {
                 if (value < 2)
-                    value = 2; // Minimum 2 rows
+                    value = 2;
                 if (value > 8)
-                    value = 8; // Maximum 8 rows
+                    value = 8;
 
                 _rows = value;
                 OnPropertyChanged();
@@ -63,9 +63,9 @@ namespace MemoryGame.Model
             set
             {
                 if (value < 2)
-                    value = 2; // Minimum 2 columns
+                    value = 2;
                 if (value > 8)
-                    value = 8; // Maximum 8 columns
+                    value = 8;
 
                 _columns = value;
                 OnPropertyChanged();
@@ -76,7 +76,6 @@ namespace MemoryGame.Model
 
         public bool IsValidConfiguration()
         {
-            // Check if total cards is even (required for pairs)
             return TotalCards % 2 == 0;
         }
 

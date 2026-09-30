@@ -3,7 +3,6 @@ using System.Windows.Input;
 
 namespace MemoryGame.Commands
 {
-    // Non-generic command (for parameterless actions)
     public class RelayCommand : ICommand
     {
         private readonly Action _execute;
@@ -26,7 +25,6 @@ namespace MemoryGame.Commands
         public void Execute(object parameter) => _execute();
     }
 
-    // Generic command (for actions with parameters)
     public class RelayCommand<T> : ICommand
     {
         private readonly Action<T> _execute;

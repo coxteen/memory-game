@@ -229,7 +229,6 @@ namespace MemoryGame.ViewModel
                     Cards.Add(card);
                 }
 
-                // Set grid dimensions from saved state if available
                 if (savedState.GridRows > 0 && savedState.GridColumns > 0)
                 {
                     GridRows = savedState.GridRows;
@@ -237,21 +236,17 @@ namespace MemoryGame.ViewModel
                 }
                 else
                 {
-                    // Fallback: calculate based on card count
                     int totalCards = Cards.Count;
 
-                    // Try to find a nice square-ish grid for the cards
                     int sqrt = (int)Math.Sqrt(totalCards);
 
                     if (totalCards % sqrt == 0)
                     {
-                        // Perfect square or rectangle
                         GridRows = sqrt;
                         GridColumns = totalCards / sqrt;
                     }
                     else
                     {
-                        // Find factors
                         for (int i = sqrt; i >= 1; i--)
                         {
                             if (totalCards % i == 0)
@@ -291,24 +286,20 @@ namespace MemoryGame.ViewModel
                     return;
                 }
 
-                // Calculate how many pairs we need based on grid dimensions
                 int totalCards = GridRows * GridColumns;
                 int pairsNeeded = totalCards / 2;
 
-                // Make sure we have enough images
                 if (imageFiles.Count < pairsNeeded)
                 {
                     MessageBox.Show($"Not enough images found. Found {imageFiles.Count} but need {pairsNeeded}.",
                         "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
 
-                    // Use available images and repeat if necessary
                     while (imageFiles.Count < pairsNeeded)
                     {
                         imageFiles.Add(imageFiles[_random.Next(imageFiles.Count)]);
                     }
                 }
 
-                // Select random images for pairs
                 imageFiles = imageFiles.OrderBy(x => _random.Next()).Take(pairsNeeded).ToList();
 
                 Cards = new List<Card>();

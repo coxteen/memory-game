@@ -34,7 +34,6 @@ namespace MemoryGame.ViewModel
             CloseOptionsCommand = new RelayCommand(CloseOptions);
             SaveOptionsCommand = new RelayCommand(SaveOptions);
 
-            // Load game settings
             LoadGameSettings();
 
             UpdateStatisticsText();
@@ -272,7 +271,6 @@ namespace MemoryGame.ViewModel
 
         private void ShowOptions()
         {
-            // Reset to current settings
             LoadGameSettings();
             OptionsErrorVisibility = Visibility.Collapsed;
             OptionsVisibility = Visibility.Visible;
