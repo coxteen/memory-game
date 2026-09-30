@@ -8,5 +8,9 @@
     <UseWPF>true</UseWPF>
     <AppDesignerFolder>Config</AppDesignerFolder>
   </PropertyGroup>
+  <ItemGroup>
+    <None Update="res\**\*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 
 </Project>

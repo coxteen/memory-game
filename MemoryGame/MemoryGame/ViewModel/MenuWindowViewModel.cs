@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 using MemoryGame.Commands;
+using MemoryGame.Services;
 using System.IO;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -339,6 +340,7 @@ namespace MemoryGame.ViewModel
 
                 _currentUser.SavedGameState = null;
                 App.Current.Properties["CurrentUser"] = _currentUser;
+                new UserDataService().SaveUser(_currentUser);
             }
 
             App.Current.Properties["LoadSavedGame"] = false;

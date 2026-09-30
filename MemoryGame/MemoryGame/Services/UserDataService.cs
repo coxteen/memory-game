@@ -23,7 +23,12 @@ namespace MemoryGame.Services
                 Directory.CreateDirectory(appDataFolder);
             }
 
-            _jsonFilePath = Path.Combine(appDataFolder, "C:\\Stuff\\Programming\\University\\Second Year\\MAP\\MemoryGame\\MemoryGame\\MemoryGame\\res\\userInfo\\users.json");
+            _jsonFilePath = Path.Combine(appDataFolder, "users.json");
+            string bundledUsersPath = Path.Combine(AppContext.BaseDirectory, "res", "userInfo", "users.json");
+            if (!File.Exists(_jsonFilePath) && File.Exists(bundledUsersPath))
+            {
+                File.Copy(bundledUsersPath, _jsonFilePath);
+            }
             Console.WriteLine($"Using JSON file: {_jsonFilePath}");
         }
 
@@ -40,13 +45,13 @@ namespace MemoryGame.Services
                 }
 
                 string json = File.ReadAllText(_jsonFilePath);
-                List<UserDto> userDtos = JsonSerializer.Deserialize<List<UserDto>>(json);
+                List<UserDto> userDtos = JsonSerializer.Deserialize<List<UserDto>>(json) ?? new List<UserDto>();
 
                 foreach (var dto in userDtos)
                 {
                     try
                     {
-                        var user = new User(dto.Username, dto.AvatarPath, dto.GamesWon, dto.GamesPlayed);
+                        var user = new User(dto.Username, AssetPathResolver.Resolve(dto.AvatarPath), dto.GamesWon, dto.GamesPlayed);
 
                         if (dto.SavedGameState != null)
                         {
@@ -55,7 +60,7 @@ namespace MemoryGame.Services
                                 Cards = dto.SavedGameState.Cards?.Select(c => new SavedCard
                                 {
                                     Id = c.Id,
-                                    ImagePath = c.ImagePath,
+                                    ImagePath = AssetPathResolver.Resolve(c.ImagePath),
                                     IsMatched = c.IsMatched,
                                     IsFlipped = c.IsFlipped
                                 }).ToList() ?? new List<SavedCard>(),

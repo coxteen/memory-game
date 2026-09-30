@@ -24,10 +24,12 @@ namespace MemoryGame.ViewModel
         {
             _userDataService = new UserDataService();
 
-            _avatarFiles = Directory.GetFiles(AvatarPath, "*.jpg")
-                .Concat(Directory.GetFiles(AvatarPath, "*.png"))
-                .Concat(Directory.GetFiles(AvatarPath, "*.jpeg"))
-                .ToList();
+            _avatarFiles = Directory.Exists(AvatarPath)
+                ? Directory.GetFiles(AvatarPath, "*.jpg")
+                    .Concat(Directory.GetFiles(AvatarPath, "*.png"))
+                    .Concat(Directory.GetFiles(AvatarPath, "*.jpeg"))
+                    .ToList()
+                : new List<string>();
             _currentAvatarIndex = 0;
             LoadCurrentAvatar();
 
@@ -35,7 +37,6 @@ namespace MemoryGame.ViewModel
 
             SelectedUser = Users.FirstOrDefault();
 
-            // Initialize commands
             NextAvatarCommand = new RelayCommand(NextAvatar, CanNavigateAvatar);
             PreviousAvatarCommand = new RelayCommand(PreviousAvatar, CanNavigateAvatar);
             PlayCommand = new RelayCommand(Play, CanPlayGame);
@@ -50,7 +51,6 @@ namespace MemoryGame.ViewModel
         #endregion
 
         #region Properties
-        // New User Dialog Properties
         private Visibility _newUserDialogVisibility = Visibility.Collapsed;
         public Visibility NewUserDialogVisibility
         {
@@ -74,7 +74,6 @@ namespace MemoryGame.ViewModel
             }
         }
 
-        // Delete Confirmation Properties
         private Visibility _deleteConfirmationVisibility = Visibility.Collapsed;
         public Visibility DeleteConfirmationVisibility
         {
@@ -123,21 +122,18 @@ namespace MemoryGame.ViewModel
 
         private void Exit()
         {
-            // Properly shutdown the application
             Application.Current.Shutdown();
         }
 
         #region New User Methods
         private void ShowNewUserDialog()
         {
-            // Clear previous input and show dialog
             NewUsername = string.Empty;
             NewUserDialogVisibility = Visibility.Visible;
         }
 
         private void CancelNewUser()
         {
-            // Hide the dialog
             NewUserDialogVisibility = Visibility.Collapsed;
         }
 
@@ -153,22 +149,19 @@ namespace MemoryGame.ViewModel
 
             var username = NewUsername.Trim();
 
-            // Check if username already exists
             if (Users.Any(u => u.Username.Equals(username, StringComparison.OrdinalIgnoreCase)))
             {
                 MessageBox.Show("A user with this name already exists.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            // Create new user with current avatar
-            var newUser = new User(username, _avatarFiles[_currentAvatarIndex]);
+            string avatarPath = _avatarFiles.Count > 0 ? _avatarFiles[_currentAvatarIndex] : string.Empty;
+            var newUser = new User(username, avatarPath);
             Users.Add(newUser);
             SelectedUser = newUser;
 
-            // Save user to settings
             _userDataService.SaveUser(newUser);
 
-            // Hide the dialog
             NewUserDialogVisibility = Visibility.Collapsed;
         }
         #endregion
@@ -178,14 +171,12 @@ namespace MemoryGame.ViewModel
         {
             if (SelectedUser == null) return;
 
-            // Set confirmation message and show dialog
             DeleteConfirmationMessage = $"Are you sure you want to delete user '{SelectedUser.Username}'?";
             DeleteConfirmationVisibility = Visibility.Visible;
         }
 
         private void CancelDeleteUser()
         {
-            // Hide the confirmation dialog
             DeleteConfirmationVisibility = Visibility.Collapsed;
         }
 
@@ -197,10 +188,8 @@ namespace MemoryGame.ViewModel
             Users.Remove(SelectedUser);
             SelectedUser = Users.FirstOrDefault();
 
-            // Delete user from settings
             _userDataService.DeleteUser(username);
 
-            // Hide the confirmation dialog
             DeleteConfirmationVisibility = Visibility.Collapsed;
         }
 
@@ -212,7 +201,7 @@ namespace MemoryGame.ViewModel
         #endregion
 
         #region Avatar Navigation
-        private const string AvatarPath = @"C:\Stuff\Programming\University\Second Year\MAP\MemoryGame\MemoryGame\MemoryGame\res\images\avatars";
+        private static string AvatarPath => Path.Combine(AppContext.BaseDirectory, "res", "images", "avatars");
         private List<string> _avatarFiles;
         private int _currentAvatarIndex;
         private BitmapImage _currentAvatar;
@@ -270,10 +259,8 @@ namespace MemoryGame.ViewModel
         {
             if (SelectedUser != null && _avatarFiles != null && _avatarFiles.Count > 0)
             {
-                // Update the selected user's avatar path
                 SelectedUser.AvatarPath = _avatarFiles[_currentAvatarIndex];
 
-                // Save the updated user
                 _userDataService.SaveUser(SelectedUser);
             }
         }
@@ -285,7 +272,6 @@ namespace MemoryGame.ViewModel
         {
             return SelectedUser != null;
         }
-        // Update the Play method in SignInViewModel.cs
         private void Play()
         {
             if (SelectedUser == null)
@@ -294,7 +280,6 @@ namespace MemoryGame.ViewModel
                 return;
             }
 
-            // Store the selected user in the application properties so it can be accessed from other views
             App.Current.Properties["CurrentUser"] = SelectedUser;
 
             var signInWindow = Application.Current.Windows

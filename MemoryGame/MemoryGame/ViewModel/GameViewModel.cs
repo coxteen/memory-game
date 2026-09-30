@@ -224,7 +224,7 @@ namespace MemoryGame.ViewModel
                         Id = savedCard.Id,
                         ImagePath = savedCard.ImagePath,
                         IsMatched = savedCard.IsMatched,
-                        IsFlipped = savedCard.IsFlipped
+                        IsFlipped = savedCard.IsMatched
                     };
                     Cards.Add(card);
                 }
@@ -275,14 +275,21 @@ namespace MemoryGame.ViewModel
 
         private void LoadCards()
         {
+            Cards = new List<Card>();
             try
             {
-                string imagePath = @"C:\Stuff\Programming\University\Second Year\MAP\MemoryGame\MemoryGame\MemoryGame\res\images\categories\musicians\";
+                string imagePath = Path.Combine(AppContext.BaseDirectory, "res", "images", "categories", "musicians");
 
                 var imageFiles = Directory.GetFiles(imagePath, "*.jpg")
                     .Concat(Directory.GetFiles(imagePath, "*.png"))
                     .Concat(Directory.GetFiles(imagePath, "*.jpeg"))
                     .ToList();
+
+                if (imageFiles.Count == 0)
+                {
+                    MessageBox.Show("No card images were found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
                 // Calculate how many pairs we need based on grid dimensions
                 int totalCards = GridRows * GridColumns;
@@ -465,7 +472,7 @@ namespace MemoryGame.ViewModel
                         Id = c.Id,
                         ImagePath = c.ImagePath,
                         IsMatched = c.IsMatched,
-                        IsFlipped = c.IsFlipped
+                        IsFlipped = c.IsMatched
                     }).ToList(),
                     TimeRemaining = TimeRemaining,
                     Moves = Moves,
