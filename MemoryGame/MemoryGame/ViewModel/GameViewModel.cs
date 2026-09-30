@@ -58,7 +58,7 @@ namespace MemoryGame.ViewModel
             }
         }
 
-        private List<Card> _cards;
+        private List<Card> _cards = new List<Card>();
         public List<Card> Cards
         {
             get => _cards;
@@ -124,7 +124,7 @@ namespace MemoryGame.ViewModel
             }
         }
 
-        private string _gameMessage;
+        private string _gameMessage = string.Empty;
         public string GameMessage
         {
             get => _gameMessage;
@@ -146,7 +146,7 @@ namespace MemoryGame.ViewModel
             }
         }
 
-        private string _saveGameMessage;
+        private string _saveGameMessage = string.Empty;
         public string SaveGameMessage
         {
             get => _saveGameMessage;

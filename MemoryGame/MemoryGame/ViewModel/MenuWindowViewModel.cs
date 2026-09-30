@@ -123,7 +123,7 @@ namespace MemoryGame.ViewModel
             }
         }
 
-        private string _totalCardsText;
+        private string _totalCardsText = string.Empty;
         public string TotalCardsText
         {
             get => _totalCardsText;
@@ -134,7 +134,7 @@ namespace MemoryGame.ViewModel
             }
         }
 
-        private string _optionsErrorMessage;
+        private string _optionsErrorMessage = string.Empty;
         public string OptionsErrorMessage
         {
             get => _optionsErrorMessage;
@@ -156,7 +156,7 @@ namespace MemoryGame.ViewModel
             }
         }
 
-        private string _statsPlayerName;
+        private string _statsPlayerName = string.Empty;
         public string StatsPlayerName
         {
             get => _statsPlayerName;
@@ -167,7 +167,7 @@ namespace MemoryGame.ViewModel
             }
         }
 
-        private string _statsGamesWon;
+        private string _statsGamesWon = string.Empty;
         public string StatsGamesWon
         {
             get => _statsGamesWon;
@@ -178,7 +178,7 @@ namespace MemoryGame.ViewModel
             }
         }
 
-        private string _statsGamesPlayed;
+        private string _statsGamesPlayed = string.Empty;
         public string StatsGamesPlayed
         {
             get => _statsGamesPlayed;
@@ -189,7 +189,7 @@ namespace MemoryGame.ViewModel
             }
         }
 
-        private string _statsWinRate;
+        private string _statsWinRate = string.Empty;
         public string StatsWinRate
         {
             get => _statsWinRate;
@@ -200,7 +200,7 @@ namespace MemoryGame.ViewModel
             }
         }
 
-        private string _savedGameInfo;
+        private string _savedGameInfo = string.Empty;
         public string SavedGameInfo
         {
             get => _savedGameInfo;

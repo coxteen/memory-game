@@ -202,9 +202,9 @@ namespace MemoryGame.ViewModel
 
         #region Avatar Navigation
         private static string AvatarPath => Path.Combine(AppContext.BaseDirectory, "res", "images", "avatars");
-        private List<string> _avatarFiles;
+        private List<string> _avatarFiles = new List<string>();
         private int _currentAvatarIndex;
-        private BitmapImage _currentAvatar;
+        private BitmapImage? _currentAvatar;
         public BitmapImage CurrentAvatar
         {
             get => _currentAvatar;

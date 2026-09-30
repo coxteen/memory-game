@@ -7,11 +7,11 @@ namespace MemoryGame.Model
 {
     public class User : INotifyPropertyChanged
     {
-        private string _username;
-        private string _avatarPath;
+        private string _username = string.Empty;
+        private string _avatarPath = string.Empty;
         private int _gamesWon;
         private int _gamesPlayed;
-        private SavedGameState _savedGameState;
+        private SavedGameState? _savedGameState;
 
         public string Username
         {
@@ -53,7 +53,7 @@ namespace MemoryGame.Model
             }
         }
 
-        public SavedGameState SavedGameState
+        public SavedGameState? SavedGameState
         {
             get => _savedGameState;
             set

@@ -12,10 +12,10 @@ namespace MemoryGame.Model
     public class Card : INotifyPropertyChanged
     {
         private int _id;
-        private string _imagePath;
+        private string _imagePath = string.Empty;
         private bool _isFlipped;
         private bool _isMatched;
-        private BitmapImage _imageSource;
+        private BitmapImage? _imageSource;
 
         #region Properties
         public int Id
@@ -39,7 +39,7 @@ namespace MemoryGame.Model
             }
         }
 
-        public BitmapImage ImageSource
+        public BitmapImage? ImageSource
         {
             get => _imageSource;
             private set

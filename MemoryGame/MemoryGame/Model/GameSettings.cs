@@ -9,7 +9,7 @@ namespace MemoryGame.Model
         private int _timeLimit = 60;
         private int _rows = 4;
         private int _columns = 4;
-        private static GameSettings _instance;
+        private static GameSettings? _instance;
 
         public static GameSettings Instance
         {
