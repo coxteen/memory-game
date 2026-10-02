@@ -2,7 +2,7 @@
 
 # Memory Game
 
-**A Windows desktop card-matching game that turns quick recall, strategy, and personalization into a polished WPF experience with progress tracking and configurable gameplay.**
+**A Windows desktop card-matching game that turns quick recall, strategy, and personalization into a polished WPF experience with progress tracking and configurable gameplay**
 
 [![Platform](https://img.shields.io/badge/Platform-Windows-0078D4?style=flat-square&logo=microsoft&logoColor=white)](https://learn.microsoft.com/dotnet/desktop/wpf/)
 [![Framework](https://img.shields.io/badge/WPF-.NET%208-512BD4?style=flat-square&logo=.net&logoColor=white)](https://dotnet.microsoft.com/apps/xamarin?tabs=windows)
